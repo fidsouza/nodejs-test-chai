@@ -1,0 +1,28 @@
+{
+  "name": "nodejs-test-chai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test":"npx mocha --parallel --exit test/",
+    "test:dev":"npx mocha test/ -w",
+    "test:cov":"npx nyc --reporters=html,text npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fidsouza/nodejs-test-chai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fidsouza/nodejs-test-chai/issues"
+  },
+  "homepage": "https://github.com/fidsouza/nodejs-test-chai#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
+    "sinon": "^9.2.4"
+  }
+}
