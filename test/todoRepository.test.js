@@ -29,16 +29,19 @@ describe('todoRepository', ()=>{
 
         })
         it('should call find from lokijs',()=>{
-            const functionName = "find"
-            const expectResult = mockDatabase
+            const functionName = "insertOne"
+            const expectResult = true
+            const data = {
+                name:'FILIPAO'
+            }
             sandBox.stub(
                 todoRepository.schedule,
                 functionName
             ).returns(expectResult)
             
-            const result = todoRepository.list()
-            expect(result).to.be.deep.equal(expectResult)
-            expect(todoRepository.schedule[functionName].calledOnce).to.be.ok 
+            const result = todoRepository.create(data)
+            expect(result).to.be.ok
+            expect(todoRepository.schedule[functionName].calledOnceWhiteExactly(data)).to.be.ok 
         })
     })
 })
