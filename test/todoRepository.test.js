@@ -28,7 +28,18 @@ describe('todoRepository', ()=>{
             expect(todoRepository.schedule[functionName].calledOnce).to.be.ok 
 
         })
-        it('should call find from lokijs')
+        it('should call find from lokijs',()=>{
+            const functionName = "find"
+            const expectResult = mockDatabase
+            sandBox.stub(
+                todoRepository.schedule,
+                functionName
+            ).returns(expectResult)
+            
+            const result = todoRepository.list()
+            expect(result).to.be.deep.equal(expectResult)
+            expect(todoRepository.schedule[functionName].calledOnce).to.be.ok 
+        })
     })
 })
 
