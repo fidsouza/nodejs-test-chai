@@ -14,7 +14,25 @@ describe('todo', ()=>{
             expect(result).to.be.not.ok
 
         })
-        it('should return invalid when creating without when or when is invalid')
-        it('should have "id","text","when" and "status" properties after creating object')
+        it('should return invalid when creating without when or when is invalid',()=>{
+            const data = {
+                text : 'Hello World',
+                when : new Date("20-12-01")
+            }
+            const todo = new Todo(data)
+            const result = todo.isValid()
+            expect(result).to.be.not.ok
+
+        })
+
+        it('should have "id","text","when" and "status" properties after creating object', ()=>{
+            const data = {
+                text : 'Hello World',
+                when : new Date("2020-12-01")
+            }
+            const todo = new Todo(data)
+            const result = todo.isValid()
+            expect(result).to.be.ok
+        })
     })
 })
