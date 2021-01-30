@@ -15,7 +15,7 @@ describe('todoRepository', ()=>{
         sandBox.restore()
     })
     describe('methos signature', ()=>{
-        it('should call insertOne from lokijs',()=>{
+        it('should call find from lokijs',()=>{
             const functionName = "find"
             const expectResult = mockDatabase
             sandBox.stub(
@@ -28,7 +28,7 @@ describe('todoRepository', ()=>{
             expect(todoRepository.schedule[functionName].calledOnce).to.be.ok 
 
         })
-        it('should call find from lokijs',()=>{
+        it('should call insertOne from lokijs',()=>{
             const functionName = "insertOne"
             const expectResult = true
             const data = {
@@ -41,7 +41,7 @@ describe('todoRepository', ()=>{
             
             const result = todoRepository.create(data)
             expect(result).to.be.ok
-            expect(todoRepository.schedule[functionName].calledOnceWhiteExactly(data)).to.be.ok 
+            expect(todoRepository.schedule[functionName].calledOnceWithExactly(data)).to.be.ok 
         })
     })
 })
