@@ -7,26 +7,28 @@ const Todo = require('../src/todo')
 describe('todoService', ()=>{
     
     let sandBox 
+    
     before(()=>{
         sandBox = createSandbox()
     })
-
+    
     describe('#list',() =>{
         const mockDatabase = [
             {
-              name: 'Faustao se fodeo',
-              age: 100,
-              meta: { revision: 0, created: 1611627605102, version: 0 },
-              '$loki': 1
+                name: 'Faustao se fodeo',
+                age: 100,
+                meta: { revision: 0, created: 1611627605102, version: 0 },
+                '$loki': 1
             },
             {
-              name: 'Joao',
-              age: 102,
-              meta: { revision: 0, created: 1611627605102, version: 0 },
-              '$loki': 2
+                name: 'Joao',
+                age: 102,
+                meta: { revision: 0, created: 1611627605102, version: 0 },
+                '$loki': 2
             }
         ]
         let todoService 
+
         beforeEach(()=>{
             const dependencies = {
                 todoRepository : {
@@ -47,6 +49,7 @@ describe('todoService', ()=>{
     })
     
     describe('#create',()=>{
+        
         let todoService 
         beforeEach(()=>{
             const dependencies = {
@@ -74,9 +77,38 @@ describe('todoService', ()=>{
             expect(result).to.be.deep.equal(expected)
     
         })
+        it('should save todo item with late status when the property is futher then today', ()=>{
+
+             const properties = {
+                text : 'I Must walk my dog',
+                when : new Date("2020-12-01 12:00:00 GMT -0")
+            }
+    
+            const expectedId= '00001'
+            
+            const uuid = require('uuid')
+            
+            const fakeNewId = sandBox.fake.returns(expectedId)
+            sandBox.replace(uuid,"v4", fakeNewId)
+            
+            const data = new Todo(properties)
+            const today = new Date("2020-12-02")
+            sandBox.useFakeTimers(today.getTime())
+            
+            todoService.create(data)
+    
+            const expectedWith = {
+                ...data,
+                id: expectedId,
+                status : "late"
+            }
+    
+            expect(todoService.todoRepository.create.calledOnceWithExactly(expectedWith)).to.be.ok 
+    
+        })
     })
 
-    it('should save todo item with late status when the property is futher then today')
+ 
     it('should save todo item pending status')
     
 })
